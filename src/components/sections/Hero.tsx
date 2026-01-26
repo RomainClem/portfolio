@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { personalInfo, socialLinks } from "@/data/portfolio";
+import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
@@ -47,6 +48,16 @@ export function Hero() {
           >
             <Mail className="h-5 w-5" />
           </a>
+          <Button asChild variant="outline" size="sm">
+            <a 
+              href="/cv.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="View CV"
+            >
+              CV
+            </a>
+          </Button>
         </div>
       </div>
     </section>
