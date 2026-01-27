@@ -1,11 +1,7 @@
-import { Hero } from "./components/sections";
+import { AnimationsPage } from "./components/pages";
 
 function App() {
-  return (
-    <main className="min-h-screen bg-background text-foreground">
-      <Hero />
-    </main>
-  );
+  return <AnimationsPage />;
 }
 
 export default App;
