@@ -20,7 +20,7 @@ export function Hero() {
       <div className="max-w-2xl space-y-6">
         {/* Name & Title */}
         <div className="space-y-2">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading">
             {personalInfo.name}
           </h1>
           <p className="text-sm sm:text-s italic text-muted-foreground">
