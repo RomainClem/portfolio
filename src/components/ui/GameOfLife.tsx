@@ -10,7 +10,7 @@ interface GameOfLifeProps {
 export function GameOfLife({
   cellSize = 12,
   speed = 120,
-  opacity = 0.1,
+  opacity = 0.02,
   density = 0.30,
 }: GameOfLifeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

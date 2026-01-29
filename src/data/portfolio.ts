@@ -1,17 +1,59 @@
 // Centralized portfolio data - customize this with your information
 
-export const personalInfo = {
-  name: "Romain Clemencon",
-  title: "Software Engineer",
-  tagline: "Strong foundation in full-stack development and a passion for solving complex problems. Skilled at breaking down intricate systems and communicating technical concepts clearly.",
-  email: "romain.clemen@gmail.com",
-  location: "Your City, Country",
+
+// Companies I've worked for
+export interface Company {
+  name: string;
+  url: string;
+}
+
+export const companies: Record<string, Company> = {
+  bankOfAmerica: {
+    name: "Bank of America",
+    url: "https://www.bankofamerica.com",
+  },
+  huawei: {
+    name: "Huawei",
+    url: "https://www.huawei.com",
+  },
+  trellix: {
+    name: "Trellix",
+    url: "https://www.trellix.com",
+  },
+  novoNordisk: {
+    name: "Novo Nordisk Engineering",
+    url: "https://www.nne.com",
+  },
 };
 
-export const socialLinks = {
-  github: "https://github.com/RomainClem",
-  linkedin: "https://linkedin.com/in/romainclemencon",
+export const socials: Record<string, Company> = {
+  github: {
+    name: "GitHub",
+    url: "https://github.com/RomainClem",
+  },
+  linkedin: {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/romainclemencon",
+  },
+  mail: {
+    name: "hi@romain.dk",
+    url: "mailto:hi@romain.dk",
+  },
+  resume: {
+    name: "resume",
+    url: "/cv.pdf",
+  },
 };
+
+export const personalInfo = {
+  name: "Romain Clémençon",
+  title: "c' should be pronounced as a soft 's' (/s/) rather than a hard 'k' (/k/) or you'll call me a Moron.",
+  tagline: "Hey! I'm Romain, a software engineer and you might have already called me a moron (cf. title).",
+  email: "romain.clemen@gmail.com",
+  location: "Copenhagen, Denmark",
+  resumeUrl: "/cv.pdf",
+};
+
 
 export const skills = {
   languages: ["C#","TypeScript", "JavaScript", "Python"],
