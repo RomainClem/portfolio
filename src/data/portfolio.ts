@@ -47,7 +47,7 @@ export const socials: Record<string, Company> = {
 
 export const personalInfo = {
   name: "Romain Clémençon",
-  title: "c' should be pronounced as a soft 's' (/s/) rather than a hard 'k' (/k/) or you'll call me a Moron.",
+  title: "'c' should be pronounced as a soft 's' (/s/) rather than a hard 'k' (/k/) or you'll call me a Moron.",
   tagline: "Hey! I'm Romain, a software engineer and you might have already called me a moron (cf. title).",
   email: "romain.clemen@gmail.com",
   location: "Copenhagen, Denmark",

@@ -45,7 +45,11 @@ export function Hero() {
           software engineer for the past 2 years for{" "}
           <DashedLink {...companies.novoNordisk} />.
         </p>
+
+        {/* Personal info */}
+
         <hr className="mx-12" />
+
         {/* Social Links */}
         <p className="text-muted-foreground leading-relaxed mb-0">Connect with me on <DashedLink {...socials.linkedin} /> or send me an email <DashedLink {...socials.mail} /></p>
         <p className="text-muted-foreground leading-relaxed mb-0">Find my side projects on <DashedLink {...socials.github} /></p>
