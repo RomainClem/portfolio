@@ -41,7 +41,7 @@ export const socials: Record<string, Company> = {
   },
   resume: {
     name: "resume",
-    url: "/cv.pdf",
+    url: "/romain-clemencon.pdf",
   },
 };
 
@@ -51,7 +51,7 @@ export const personalInfo = {
   tagline: "Hey! I'm Romain, a software engineer and you might have already called me a moron (cf. title).",
   email: "romain.clemen@gmail.com",
   location: "Copenhagen, Denmark",
-  resumeUrl: "/cv.pdf",
+  resumeUrl: "/romain-clemencon.pdf",
 };
 
 
