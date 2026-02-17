@@ -2,10 +2,11 @@ import path from "path"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
+import { markdownPages } from "./src/plugins/markdown-pages"
 
 // https://vite.dev/config/
 export default defineConfig(async ({ command }) => {
-  const plugins = [react(), tailwindcss()]
+  const plugins = [react(), tailwindcss(), markdownPages()]
 
   // Only load the Cloudflare plugin during build to avoid slow dev startup
   if (command === "build") {
