@@ -42,7 +42,7 @@ export function Hero() {
           <DashedLink {...companies.huawei} /> and{" "}
           <DashedLink {...companies.trellix} /> (previously McAfee and
           FireEye). I currently live in Copenhagen, Denmark, where I've been working as a
-          software engineer for the past 2 years for{" "}
+          software engineer for the past 2 years and a half for{" "}
           <DashedLink {...companies.novoNordisk} />.
         </p>
 
