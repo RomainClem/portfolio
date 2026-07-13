@@ -1,18 +1,7 @@
-import { personalInfo, companies, socials } from "@/data/portfolio";
+import HeroContent, { frontmatter } from "@/content/pages/hero.mdx"
+import type { HeroFrontmatter } from "@/types/content"
 
-// Helper component for links with dashed underline
-function DashedLink({ name, url }: { name: string; url: string }) {
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="italic font-medium underline decoration-dashed underline-offset-4 hover:text-foreground transition-colors"
-    >
-      {name}
-    </a>
-  );
-}
+const hero = frontmatter as unknown as HeroFrontmatter
 
 export function Hero() {
   return (
@@ -21,41 +10,23 @@ export function Hero() {
         {/* Name & Title */}
         <div className="space-y-2">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading">
-            {personalInfo.name}
+            {hero.name}
           </h1>
           <p className="text-sm sm:text-s italic text-muted-foreground">
-            {personalInfo.title}
+            {hero.title}
           </p>
         </div>
 
         {/* Tagline */}
-        <p className="text-muted-foreground leading-relaxed ">
-          {personalInfo.tagline}
+        <p className="text-muted-foreground leading-relaxed">
+          {hero.tagline}
         </p>
 
-        {/* Presentation with company links */}
-        <p className="text-muted-foreground leading-relaxed ">
-          I'm from Paris, France, and have lived in Ireland for 5 years where I
-          studied computer science and worked as a software engineer for a few
-          companies such as{" "}
-          <DashedLink {...companies.bankOfAmerica} />,{" "}
-          <DashedLink {...companies.huawei} /> and{" "}
-          <DashedLink {...companies.trellix} /> (previously McAfee and
-          FireEye). I currently live in Copenhagen, Denmark, where I've been working as a
-          software engineer for the past 2 years and a half for{" "}
-          <DashedLink {...companies.novoNordisk} />.
-        </p>
-
-        {/* Personal info */}
-
-        <hr className="mx-12" />
-
-        {/* Social Links */}
-        <p className="text-muted-foreground leading-relaxed mb-0">Connect with me on <DashedLink {...socials.linkedin} /> or send me an email <DashedLink {...socials.mail} /></p>
-        <p className="text-muted-foreground leading-relaxed mb-0">Find my side projects on <DashedLink {...socials.github} /></p>
-        <p className="text-muted-foreground leading-relaxed mb-0">Have a look at my  <DashedLink {...socials.resume} /></p>
-
+        {/* MDX Content */}
+        <div className="text-muted-foreground leading-relaxed [&_hr]:mx-12 [&_hr]:my-4 [&_p]:mb-1 [&_a]:italic [&_a]:font-medium [&_a]:underline [&_a]:decoration-dashed [&_a]:underline-offset-4 [&_a]:hover:text-foreground [&_a]:transition-colors">
+          <HeroContent />
+        </div>
       </div>
     </section>
-  );
+  )
 }
