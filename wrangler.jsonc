@@ -2,5 +2,8 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "portfolio",
   "compatibility_date": "2026-01-20",
-  "main": "./src/index.tsx"
+  "main": "./src/index.tsx",
+  "assets": {
+    "not_found_handling": "single-page-application"
+  }
 }
