@@ -5,60 +5,46 @@ export function BlogListPage() {
   const posts = getBlogPosts()
 
   return (
-    <section className="min-h-screen flex items-start justify-center px-4 pt-24 pb-16">
-      <div className="max-w-2xl w-full space-y-8">
-        <div className="space-y-2">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading">
+    <section className="flex justify-center px-6 pt-[140px] pb-[100px]">
+      <div className="flex w-full max-w-[640px] flex-col gap-12">
+        <div className="flex flex-col gap-2.5">
+          <h1 className="font-heading text-[32px] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[44px]">
             Blog
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             Thoughts on software engineering, tools, and things I find interesting.
           </p>
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-muted-foreground italic">No posts yet.</p>
+          <p className="italic text-muted-foreground">No posts yet.</p>
         ) : (
-          <div className="space-y-6">
+          <div className="flex flex-col gap-9">
             {posts.map((post) => (
-              <article key={post.slug} className="space-y-1">
+              <article key={post.slug} className="flex flex-col items-start gap-1.5">
                 <Link
                   to={`/blog/${post.slug}`}
-                  className="text-lg font-medium underline decoration-dashed underline-offset-4 hover:text-foreground transition-colors"
+                  className="font-heading text-2xl font-semibold underline decoration-dashed underline-offset-[5px] transition-colors hover:text-muted-foreground"
                 >
                   {post.frontmatter.title}
                 </Link>
-                <p className="text-sm text-muted-foreground">
+                <span className="font-heading text-sm italic text-faint">
                   {new Date(post.frontmatter.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}
-                </p>
-                <p className="text-muted-foreground text-sm">
+                </span>
+                <p className="text-[15px] leading-[1.6] text-muted-foreground">
                   {post.frontmatter.summary}
                 </p>
-                <div className="flex gap-2 flex-wrap">
-                  {post.frontmatter.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <span className="text-[13px] text-faint">
+                  {post.frontmatter.tags.join(" · ")}
+                </span>
               </article>
             ))}
           </div>
         )}
-
-        <Link
-          to="/"
-          className="inline-block text-sm text-muted-foreground underline decoration-dashed underline-offset-4 hover:text-foreground transition-colors"
-        >
-          &larr; Back home
-        </Link>
       </div>
     </section>
   )
