@@ -5,25 +5,27 @@ const hero = frontmatter as unknown as HeroFrontmatter
 
 export function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-2xl space-y-6">
-        {/* Name & Title */}
-        <div className="space-y-2">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading">
+    <section className="box-border flex min-h-screen items-center justify-center px-6 pt-[120px] pb-[100px]">
+      <div className="flex max-w-[640px] flex-col gap-[26px]">
+        {/* Name & cédille line */}
+        <div className="flex flex-col gap-3">
+          <h1 className="font-heading text-[38px] leading-[1.05] font-semibold tracking-[-0.02em] sm:text-[58px]">
             {hero.name}
           </h1>
-          <p className="text-sm sm:text-s italic text-muted-foreground">
+          <p className="font-heading text-[17px] italic text-muted-foreground">
             {hero.title}
           </p>
         </div>
 
         {/* Tagline */}
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-base leading-[1.65] text-muted-foreground">
           {hero.tagline}
         </p>
 
-        {/* MDX Content */}
-        <div className="text-muted-foreground leading-relaxed [&_hr]:mx-12 [&_hr]:my-4 [&_p]:mb-1 [&_a]:italic [&_a]:font-medium [&_a]:underline [&_a]:decoration-dashed [&_a]:underline-offset-4 [&_a]:hover:text-foreground [&_a]:transition-colors">
+        {/* MDX content: intro paragraph, hr, contact block.
+            hr margins add up with the 26px column gap to match the design (34px = 26 + 8);
+            contact paragraphs sit flush at line-height 1.9, reading as one block. */}
+        <div className="text-base text-muted-foreground [&_hr]:mx-12 [&_hr]:my-[34px] [&_p]:m-0 [&_p]:leading-[1.9] [&_p:first-of-type]:leading-[1.65]">
           <HeroContent />
         </div>
       </div>

@@ -7,7 +7,7 @@ interface MdxContentProps {
 
 export function MdxContent({ children, className = "" }: MdxContentProps) {
   return (
-    <article className={`prose prose-neutral dark:prose-invert max-w-none ${className}`}>
+    <article className={`prose max-w-none ${className}`}>
       {children}
     </article>
   )
