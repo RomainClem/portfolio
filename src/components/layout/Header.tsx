@@ -11,14 +11,41 @@ const links = [
   { to: "/blog", label: "Blog" },
 ]
 
-// Same cast trick as SquiggleFrame: SVG geometry via CSS so calc() works
-const rectStyle = {
-  stroke: "var(--faint)",
-  x: "2px",
-  y: "2px",
-  width: "calc(100% - 4px)",
-  height: "calc(100% - 4px)",
-} as CSSProperties
+// One torn edge + rotation per scrap (indices 0-3 = links, 4 = theme toggle);
+// each polygon is a different irregular tear so no two scraps match.
+const scraps = [
+  {
+    rotate: "-2deg",
+    clipPath:
+      "polygon(2% 8%, 12% 2%, 30% 5%, 47% 0%, 65% 4%, 82% 1%, 97% 7%, 100% 40%, 96% 68%, 99% 92%, 80% 98%, 60% 94%, 38% 100%, 18% 95%, 3% 98%, 0% 65%, 4% 35%)",
+  },
+  {
+    rotate: "1.5deg",
+    clipPath:
+      "polygon(0% 12%, 15% 4%, 33% 0%, 52% 6%, 70% 2%, 88% 5%, 100% 10%, 97% 35%, 100% 62%, 96% 90%, 84% 100%, 63% 96%, 45% 99%, 26% 94%, 8% 100%, 2% 72%, 0% 40%)",
+  },
+  {
+    rotate: "-1deg",
+    clipPath:
+      "polygon(3% 10%, 14% 0%, 35% 6%, 55% 2%, 74% 7%, 92% 0%, 100% 25%, 96% 50%, 100% 78%, 93% 97%, 72% 93%, 52% 100%, 30% 96%, 12% 99%, 0% 88%, 4% 55%, 1% 28%)",
+  },
+  {
+    rotate: "2deg",
+    clipPath:
+      "polygon(1% 20%, 8% 3%, 28% 7%, 46% 1%, 66% 6%, 85% 2%, 98% 8%, 100% 34%, 95% 58%, 100% 85%, 87% 99%, 66% 95%, 47% 100%, 27% 97%, 9% 93%, 0% 70%, 3% 45%)",
+  },
+  {
+    rotate: "-1.5deg",
+    clipPath:
+      "polygon(4% 6%, 18% 1%, 36% 7%, 57% 0%, 77% 5%, 94% 2%, 100% 30%, 96% 55%, 99% 80%, 91% 100%, 70% 94%, 50% 98%, 31% 93%, 13% 100%, 0% 92%, 3% 60%, 1% 30%)",
+  },
+]
+
+const scrapStyle = (index: number) =>
+  ({
+    "--rot": scraps[index].rotate,
+    clipPath: scraps[index].clipPath,
+  }) as CSSProperties
 
 function getInitialTheme(): Theme {
   // The inline script in index.html applies .dark before paint; mirror it here
@@ -41,38 +68,13 @@ export function Header() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 py-6">
-      <nav className="pointer-events-auto relative flex items-center gap-4 rounded-full bg-pill px-5 py-[11px] text-sm shadow-[0_2px_10px_rgba(0,0,0,0.07)] backdrop-blur-sm sm:gap-7 sm:px-[31px]">
-        <span aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <svg width="100%" height="100%" className="block overflow-visible">
-            <filter id="squiggle-nav" x="-10%" y="-10%" width="120%" height="120%">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.05"
-                numOctaves="2"
-                seed="4"
-                result="noise"
-              />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" />
-            </filter>
-            <rect
-              fill="none"
-              strokeWidth="1.2"
-              rx="20"
-              strokeDasharray="8 6"
-              filter="url(#squiggle-nav)"
-              style={rectStyle}
-            />
-          </svg>
-        </span>
-        {links.map((link) => (
+      <nav className="pointer-events-auto flex items-center gap-[6px] sm:gap-[10px]">
+        {links.map((link, index) => (
           <Link
             key={link.to}
             to={link.to}
-            className={
-              isActive(link.to)
-                ? "font-medium text-foreground"
-                : "text-muted-foreground transition-colors hover:text-foreground"
-            }
+            style={scrapStyle(index)}
+            className={`scrap ${isActive(link.to) ? "scrap-active" : "scrap-idle"}`}
           >
             {link.label}
           </Link>
@@ -80,7 +82,8 @@ export function Header() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="cursor-pointer p-0 font-heading text-sm italic text-faint transition-colors hover:text-foreground"
+          style={scrapStyle(4)}
+          className="scrap scrap-toggle"
         >
           {theme === "dark" ? "light" : "dark"}
         </button>

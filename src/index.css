@@ -52,6 +52,56 @@
   }
 }
 
+/* Torn-paper nav scraps. Colors are fixed, not theme vars: the paper stays
+   pale on a dark desk by design. Shadow must be drop-shadow (not box-shadow)
+   so it follows the torn clip-path edge. */
+.scrap {
+  display: inline-block;
+  padding: 11px 20px 13px;
+  font-family: "Caveat", cursive;
+  font-size: 18px;
+  line-height: 1;
+  background: linear-gradient(178deg, oklch(0.965 0.045 95), oklch(0.925 0.05 95));
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
+  transform: rotate(var(--rot, 0deg));
+  transition: transform 0.15s, color 0.15s, filter 0.15s;
+}
+
+.scrap:hover {
+  transform: rotate(0deg) translateY(-2px);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.22));
+  color: oklch(0.3 0.02 95);
+}
+
+.scrap-active {
+  color: oklch(0.3 0.02 95);
+  font-weight: 500;
+}
+
+.scrap-idle {
+  color: oklch(0.48 0.025 95);
+}
+
+.scrap-toggle {
+  padding: 11px 18px 13px;
+  color: oklch(0.52 0.022 95);
+  border: none;
+  cursor: pointer;
+}
+
+/* Below Tailwind's sm breakpoint the five scraps overflow a phone screen;
+   shrink type and padding so the whole row fits */
+@media (width < 40rem) {
+  .scrap {
+    padding: 9px 13px 11px;
+    font-size: 15px;
+  }
+
+  .scrap-toggle {
+    padding: 9px 11px 11px;
+  }
+}
+
 /* Blog post prose */
 .prose {
   color: var(--muted-foreground);
