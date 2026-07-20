@@ -11,30 +11,25 @@ export function HomePage() {
             Romain Clémençon
           </h1>
           <p className="font-heading text-[17px] italic text-muted-foreground">
-            The French cédille (ç) is a hook under the letter 'c' that changes
-            its pronunciation from a hard /k/ sound to a soft /s/ or you'll
-            call me a Moron.
+            The French cédille (ç) is a hook under the letter 'c' that softens
+            a hard /k/ into a soft /s/. It's the only thing standing between
+            my name and total chaos.
           </p>
         </div>
 
         {/* Tagline */}
         <p className="text-base leading-[1.65] text-muted-foreground">
-          Hey! I'm Romain, a software engineer and you might have already
-          called me a moron (cf. title).
+          Hey! I'm Romain, pronounced like the lettuce, spelled like the
+          empire, mispronounced like everything else.
         </p>
 
         <div className="text-base text-muted-foreground">
           <p className="leading-[1.65]">
-            I'm from Paris, France, and have lived in Ireland for 5 years
-            where I studied computer science and worked as a software engineer
-            for a few companies such as{" "}
-            <DashedLink name="Bank of America" url="https://www.bankofamerica.com" />,{" "}
-            <DashedLink name="Huawei" url="https://www.huawei.com" /> and{" "}
-            <DashedLink name="Trellix" url="https://www.trellix.com" />{" "}
-            (previously McAfee and FireEye). I currently live in Copenhagen,
-            Denmark, where I've been working as a software engineer for the
-            past 2 years and a half for{" "}
+            I'm a French software engineer based in Copenhagen, currently
+            digitalizing engineering tools at{" "}
             <DashedLink name="Novo Nordisk Engineering" url="https://www.nne.com" />.
+            Before that: a decade of building software across banking, fintech
+            and security.
           </p>
 
           <hr className="mx-12 my-[34px]" />

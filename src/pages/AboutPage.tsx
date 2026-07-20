@@ -18,10 +18,14 @@ export function AboutPage() {
       title="About"
       tagline={
         <>
-          Paris → Cork → Dublin → Copenhagen. I studied computer science in Ireland
-          and have spent the last decade building software across banking,
-          fintech and security. These days I digitalize engineering tools
-          at <DashedLink name="Novo Nordisk Engineering" url="https://www.nne.com" />.
+          Paris → Cork → Dublin → Copenhagen. I studied computer science in
+          Ireland and cut my teeth at{" "}
+          <DashedLink name="Bank of America" url="https://www.bankofamerica.com" />,{" "}
+          <DashedLink name="Huawei" url="https://www.huawei.com" /> and{" "}
+          <DashedLink name="Trellix" url="https://www.trellix.com" /> (previously
+          McAfee and FireEye) before moving to Denmark, where I've spent the
+          past two and a half years at{" "}
+          <DashedLink name="Novo Nordisk Engineering" url="https://www.nne.com" />.
         </>
       }
     >
