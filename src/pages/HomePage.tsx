@@ -7,6 +7,9 @@ export function HomePage() {
       <div className="flex max-w-[640px] flex-col gap-[26px]">
         {/* Name & cédille line */}
         <div className="flex flex-col gap-3">
+          <p className="postit relative z-10 -mb-[22px] -ml-1 self-start">
+            Software Engineer · Copenhagen
+          </p>
           <h1 className="font-heading text-[38px] leading-[1.05] font-semibold tracking-[-0.02em] sm:text-[58px]">
             Romain Clémençon
           </h1>
@@ -25,8 +28,7 @@ export function HomePage() {
 
         <div className="text-base text-muted-foreground">
           <p className="leading-[1.65]">
-            I'm a French software engineer based in Copenhagen, currently
-            digitalizing engineering tools at{" "}
+            I'm currently digitalizing engineering tools at{" "}
             <DashedLink name="Novo Nordisk Engineering" url="https://www.nne.com" />.
             Before that: a decade of building software across banking, fintech
             and security.

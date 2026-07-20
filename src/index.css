@@ -89,6 +89,26 @@
   cursor: pointer;
 }
 
+/* Post-it kicker. Like the scraps, colors are fixed rather than theme vars:
+   the sticky note stays yellow on a dark desk. The gradient's darker top
+   band suggests the adhesive strip. */
+.postit {
+  display: inline-block;
+  padding: 15px 22px 17px;
+  font-family: "Indie Flower", cursive;
+  font-size: 23px;
+  line-height: 1;
+  color: oklch(0.38 0.04 95);
+  background: linear-gradient(
+    180deg,
+    oklch(0.9 0.1 100) 0%,
+    oklch(0.94 0.11 100) 18%,
+    oklch(0.92 0.105 100) 100%
+  );
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: rotate(3deg);
+}
+
 /* Below Tailwind's sm breakpoint the five scraps overflow a phone screen;
    shrink type and padding so the whole row fits */
 @media (width < 40rem) {
