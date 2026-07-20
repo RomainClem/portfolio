@@ -9,7 +9,7 @@ import { BlogPostPage } from "./pages/BlogPostPage"
 
 function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="crumple min-h-screen bg-background text-foreground">
       <SquiggleFrame />
       <Header />
       <main>
