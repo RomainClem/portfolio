@@ -5,9 +5,10 @@ import { DashedLink } from "@/components/ui/DashedLink"
 
 const skillGroups: Array<[string, string[]]> = [
   ["Languages", skills.languages],
-  ["Frontend", skills.frontend],
   ["Backend", skills.backend],
-  ["Tools", skills.tools],
+  ["Frontend", skills.frontend],
+  ["Cloud & DevOps", skills.cloud],
+  ["AI Engineering", skills.ai],
 ]
 
 export function AboutPage() {
@@ -18,8 +19,9 @@ export function AboutPage() {
       title="About"
       tagline={
         <>
-          Paris → Cork → Dublin → Copenhagen. I studied computer science in
-          Ireland and cut my teeth at{" "}
+          Paris → Cork → Dublin → Copenhagen. I studied software development in
+          Ireland — supporting <DashedLink name="Stripe" url="https://www.stripe.com" />{" "}
+          integrations on the side — and cut my teeth at{" "}
           <DashedLink name="Bank of America" url="https://www.bankofamerica.com" />,{" "}
           <DashedLink name="Huawei" url="https://www.huawei.com" /> and{" "}
           <DashedLink name="Trellix" url="https://www.trellix.com" /> (previously
@@ -67,9 +69,32 @@ export function AboutPage() {
             </div>
           </div>
         ))}
-        {/* TODO: pre-2023 experience (Trellix, Huawei, Bank of America) — the
-            durations and summaries in the design are unverified placeholders.
-            Add real entries as MDX files in src/content/experience/ once verified. */}
+      </div>
+
+      <div className="flex flex-col gap-7">
+        <h2 className="font-heading text-[28px] font-semibold">Education</h2>
+        <div className="grid grid-cols-[150px_1fr] gap-x-6 gap-y-2">
+          <span className="pt-[3px] text-sm text-faint">Sep 2019 - May 2023</span>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-[17px] font-medium">
+              BSc (Honours) in Software Development
+            </h3>
+            <a
+              href="https://www.mtu.ie"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="self-start text-sm italic text-muted-foreground underline decoration-dashed underline-offset-4 transition-colors hover:text-foreground"
+            >
+              Munster Technological University
+            </a>
+            <div className="mt-0.5 text-sm leading-[1.6] text-muted-foreground">
+              <p className="m-0">
+                Graduated with First-Class Honours, achieved every academic
+                year. Alejandro de la Flor Trellix Scholarship, 2021/2022.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </PageShell>
   )
