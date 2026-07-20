@@ -77,9 +77,9 @@
   opacity: 0.45;
 }
 
-/* Ruled pencil line for hr: straight (a ruler was used) but with graphite
-   grain and faint pressure wobble, via an SVG path roughened by turbulence
-   displacement. The SVG is a mask, not the image itself, so the line is
+/* Ruled ink line for hr: straight (a ruler was used) but with a slightly
+   rough nib edge and faint pressure wobble, via an SVG path roughened by
+   turbulence displacement. The SVG is a mask, not the image itself, so the line is
    painted with the theme's --faint and adapts to dark mode. The comma'd
    .prose selector outranks the typography plugin's border-top styling. */
 hr,
@@ -87,8 +87,8 @@ hr,
   height: 7px;
   border: none;
   background-color: var(--faint);
-  opacity: 0.65;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='7' preserveAspectRatio='none'%3E%3Cfilter id='p' x='-5%25' y='-60%25' width='110%25' height='220%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' seed='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1.7'/%3E%3C/filter%3E%3Cpath d='M2 3.6 C 110 3.1 230 4.3 350 3.5 S 570 4.1 638 3.4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' filter='url(%23p)'/%3E%3C/svg%3E");
+  opacity: 0.85;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='7' preserveAspectRatio='none'%3E%3Cfilter id='p' x='-5%25' y='-60%25' width='110%25' height='220%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' seed='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1.2'/%3E%3C/filter%3E%3Cpath d='M2 3.6 C 110 3.1 230 4.3 350 3.5 S 570 4.1 638 3.4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' filter='url(%23p)'/%3E%3C/svg%3E");
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
   transform: rotate(-0.25deg);
