@@ -24,7 +24,7 @@ export function AboutPage() {
           <DashedLink name="Huawei" url="https://www.huawei.com" /> and{" "}
           <DashedLink name="Trellix" url="https://www.trellix.com" /> (previously
           McAfee and FireEye) before moving to Denmark, where I've spent the
-          past two and a half years at{" "}
+          past thre years at{" "}
           <DashedLink name="Novo Nordisk Engineering" url="https://www.nne.com" />.
         </>
       }
