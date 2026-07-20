@@ -17,8 +17,8 @@ const rectStyle = {
 const seeds = [7, 4, 27, 11, 33, 52, 68, 85, 13, 19]
 
 // Backdrop blur that fades from full strength at the screen edge to nothing
-// toward the center. Applied to four thin edge strips rather than one
-// full-screen layer so the browser only composites a narrow band.
+// toward the center. Applied to thin edge strips rather than one full-screen
+// layer so the browser only composites a narrow band.
 function edgeBlur(fadeDirection: string): CSSProperties {
   const mask = `linear-gradient(${fadeDirection}, black 25%, transparent)`
   return {
@@ -29,13 +29,9 @@ function edgeBlur(fadeDirection: string): CSSProperties {
   }
 }
 
-// Side strips are inset vertically so they don't overlap the top/bottom
-// strips (stacked backdrop blurs would double up in the corners).
 const blurStrips: { className: string; fadeDirection: string }[] = [
   { className: "top-0 inset-x-0 h-14", fadeDirection: "to bottom" },
   { className: "bottom-0 inset-x-0 h-14", fadeDirection: "to top" },
-  { className: "left-0 inset-y-14 w-14", fadeDirection: "to right" },
-  { className: "right-0 inset-y-14 w-14", fadeDirection: "to left" },
 ]
 
 export function SquiggleFrame() {
