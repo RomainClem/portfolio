@@ -11,8 +11,3 @@ export const socials = {
   mail: { name: "hi@romain.dk", url: "mailto:hi@romain.dk" },
   resume: { name: "resume", url: "/romain-clemencon.pdf" },
 }
-
-export const personalInfo = {
-  email: "hi@romain.dk",
-  location: "Copenhagen, Denmark",
-}

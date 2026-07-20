@@ -24,9 +24,3 @@ export interface ProjectFrontmatter {
   githubUrl?: string
   order: number
 }
-
-export interface HeroFrontmatter {
-  name: string
-  title: string
-  tagline: string
-}
