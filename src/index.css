@@ -4,6 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  color-scheme: light;
   --radius: 0.625rem;
   --background: oklch(0.98 0.004 85);
   --foreground: oklch(0.22 0.012 85);
@@ -15,6 +16,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.17 0.008 85);
   --foreground: oklch(0.93 0.005 85);
   --muted-foreground: oklch(0.65 0.01 85);
@@ -43,6 +45,16 @@
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html {
+    /* Reserve space for the scrollbar even on short pages, so the layout
+       doesn't shift when navigating between scrollable and non-scrollable
+       routes. Transparent track + faint thumb so the bar blends into the
+       paper instead of drawing an OS-grey column. */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--faint) transparent;
   }
 
   body {
