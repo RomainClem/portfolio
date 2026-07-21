@@ -23,7 +23,7 @@
   --faint: oklch(0.5 0.01 85);
   --border: oklch(0.28 0.008 85);
   --pill: oklch(0.17 0.008 85 / 0.85);
-  /* --codebg intentionally unchanged: code blocks stay light in dark mode */
+  /* Code blocks switch to Shiki's dark theme background (see .prose pre below) */
 }
 
 @theme inline {
@@ -192,8 +192,8 @@ hr,
   color: var(--foreground);
 }
 
-/* !important: Shiki inlines the theme background on <pre>; --codebg wins by design
-   (kept light in dark mode so the vitesse-light token colors stay readable) */
+/* Light mode: Shiki inlines the vitesse-light background on <pre>; --codebg
+   wins by design (!important) for a consistent paper-toned block. */
 .prose pre {
   background-color: var(--codebg) !important;
   border: 1px solid var(--border);
@@ -201,4 +201,16 @@ hr,
   padding: 1rem 1.25rem;
   font-size: 0.875rem;
   line-height: 1.714;
+}
+
+/* Dark mode: activate Shiki's dual-theme CSS variables. Shiki stamps
+   --shiki-dark / --shiki-dark-bg on every token and on <pre>; we swap the
+   inlined light colors for them under the .dark class. */
+.dark .prose pre,
+.dark .prose pre span {
+  color: var(--shiki-dark) !important;
+}
+
+.dark .prose pre {
+  background-color: var(--shiki-dark-bg) !important;
 }

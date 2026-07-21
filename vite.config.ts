@@ -20,7 +20,14 @@ export default defineConfig(async ({ command }) => {
       ],
       rehypePlugins: [
         [rehypeShiki, {
-          theme: "vitesse-light",
+          // Dual themes: `light` is inlined as the default; `dark` is emitted as
+          // CSS variables (--shiki-dark, --shiki-dark-bg, …) that index.css
+          // activates under the .dark class at runtime.
+          themes: {
+            light: "vitesse-light",
+            dark: "vitesse-dark",
+          },
+          defaultColor: "light",
           langs: ["typescript", "javascript", "csharp", "python", "bash", "json", "css", "html"],
         }],
       ],
