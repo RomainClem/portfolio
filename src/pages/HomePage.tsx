@@ -7,7 +7,7 @@ export function HomePage() {
             <div className="flex max-w-[640px] flex-col gap-[26px]">
                 {/* Name & cédille line */}
                 <div className="flex flex-col gap-3">
-                    <p className="postit relative z-10 -mb-[22px] -ml-1 self-start">
+                    <p className="postit relative z-10 -mb-3.5 ml-4 self-start">
                         Software Engineer · Copenhagen
                     </p>
                     <h1 className="font-heading text-[38px] leading-[1.05] font-semibold tracking-[-0.02em] sm:text-[58px]">
