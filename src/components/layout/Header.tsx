@@ -67,7 +67,7 @@ export function Header() {
     to === "/" ? pathname === "/" : pathname.startsWith(to)
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 py-6">
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-50 flex justify-center px-4 py-6">
       <nav className="pointer-events-auto flex items-center gap-[6px] sm:gap-[10px]">
         {links.map((link, index) => (
           <Link
