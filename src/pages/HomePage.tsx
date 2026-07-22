@@ -24,7 +24,7 @@ export function HomePage() {
                 {/* Tagline */}
                 <p className="text-base leading-[1.65] text-muted-foreground">
                     Hey! I'm Romain, if you're French, you already know how to
-                    say it. If you're not, "Roman" like the empire is close
+                    say it. If you're not, "<i>Roman</i>" like the empire is close
                     enough, and far kinder than what happens to my last name
                     (see above).
                 </p>

@@ -192,9 +192,13 @@ hr,
   color: var(--foreground);
 }
 
+.prose :where(a) {
+  color: var(--foreground);
+}
+
 /* Light mode: Shiki inlines the vitesse-light background on <pre>; --codebg
    wins by design (!important) for a consistent paper-toned block. */
-.prose pre {
+.prose pre:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background-color: var(--codebg) !important;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
@@ -206,11 +210,11 @@ hr,
 /* Dark mode: activate Shiki's dual-theme CSS variables. Shiki stamps
    --shiki-dark / --shiki-dark-bg on every token and on <pre>; we swap the
    inlined light colors for them under the .dark class. */
-.dark .prose pre,
-.dark .prose pre span {
+.dark .prose pre:not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.dark .prose pre:not(:where([class~="not-prose"], [class~="not-prose"] *)) span {
   color: var(--shiki-dark) !important;
 }
 
-.dark .prose pre {
+.dark .prose pre:not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background-color: var(--shiki-dark-bg) !important;
 }

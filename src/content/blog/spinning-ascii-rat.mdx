@@ -1,0 +1,193 @@
+---
+title: "A Rat, Spinning, in ASCII"
+date: "2026-07-21"
+summary: "Rendering a 3D rat as spinning ASCII art -- a point cloud, a z-buffer, a light vector, and twelve characters."
+tags: ["graphics", "typescript"]
+published: true
+---
+
+import { SpinningRat } from "@/components/ui/SpinningRat"
+
+For my first post, I wanted something that captures the spirit of this blog. So: a rat, spinning in 3D, rendered entirely as text. Click it to pause.
+
+<SpinningRat />
+
+This is a live React component, not a GIF. It runs the same trick as the famous [donut.c](https://www.a1k0n.net/2011/07/20/donut-math.html): model a shape as a cloud of 3D points, rotate them a little more each frame, project them onto a grid of characters, and pick a brighter character the more directly each point faces the light.
+
+The whole thing is about 150 lines of TypeScript with no dependencies. Here is how it works.
+
+## A rat is just ellipsoids in a trench coat
+
+Everything in the model is an ellipsoid, a sphere stretched by a different radius along each axis. A helper walks a latitude/longitude grid over the surface and records each point together with its normal (the direction the surface faces there, which we need later for lighting):
+
+```typescript
+function ellipsoid(center: Vec3, radii: Vec3, uSteps: number, vSteps: number) {
+  const points: SurfacePoint[] = []
+  for (let i = 0; i < uSteps; i++) {
+    const u = (i / uSteps) * Math.PI * 2 // longitude
+    for (let j = 1; j < vSteps; j++) {
+      const v = (j / vSteps) * Math.PI - Math.PI / 2 // latitude
+      const x = Math.cos(v) * Math.cos(u)
+      const y = Math.sin(v)
+      const z = Math.cos(v) * Math.sin(u)
+      points.push({
+        pos: [
+          center[0] + radii[0] * x,
+          center[1] + radii[1] * y,
+          center[2] + radii[2] * z,
+        ],
+        // an ellipsoid's normal is the unit direction scaled by the
+        // inverse radii -- this makes shading follow the squashed shape
+        normal: normalize([x / radii[0], y / radii[1], z / radii[2]]),
+      })
+    }
+  }
+  return points
+}
+```
+
+With that, the rat itself is just a parts list. Haunches, torso, head, snout, two ears, four feet -- and a tail, built as sixty tiny spheres swept along a curve that droops, rises, and wiggles sideways:
+
+```typescript
+function buildRat(): SurfacePoint[] {
+  const points = [
+    ...ellipsoid([-0.75, 0.0, 0], [0.62, 0.62, 0.54], 48, 24), // haunches
+    ...ellipsoid([0.1, 0.04, 0], [0.78, 0.53, 0.46], 48, 24), // torso
+    ...ellipsoid([0.95, 0.2, 0], [0.42, 0.31, 0.29], 36, 18), // head
+    ...ellipsoid([1.4, 0.1, 0], [0.26, 0.15, 0.14], 24, 12), // snout
+    ...ellipsoid([0.78, 0.58, 0.24], [0.17, 0.2, 0.07], 24, 12), // ears
+    ...ellipsoid([0.78, 0.58, -0.24], [0.17, 0.2, 0.07], 24, 12),
+    ...ellipsoid([0.5, -0.42, 0.3], [0.14, 0.12, 0.1], 16, 8), // front feet
+    ...ellipsoid([0.5, -0.42, -0.3], [0.14, 0.12, 0.1], 16, 8),
+    ...ellipsoid([-0.65, -0.5, 0.34], [0.18, 0.14, 0.12], 16, 8), // hind feet
+    ...ellipsoid([-0.65, -0.5, -0.34], [0.18, 0.14, 0.12], 16, 8),
+  ]
+  // tail: a tapering tube of little spheres swept along a curve
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60
+    const r = 0.06 * (1 - 0.6 * t)
+    points.push(
+      ...ellipsoid(
+        [
+          -1.28 - 1.15 * t,
+          -0.18 + 0.7 * t - 0.55 * t * t,
+          0.3 * Math.sin(2.5 * t) * t,
+        ],
+        [r, r, r],
+        10,
+        5
+      )
+    )
+  }
+  return points
+}
+```
+
+The blobs overlap freely. Any point that ends up inside another blob simply loses the depth test and never gets drawn, so there is no geometry cleanup to do. Tuning those numbers until the silhouette read as "rat" instead of "capybara" was most of the work.
+
+## Spin, project, shade
+
+Each frame renders the roughly 6,500 points from scratch into an 80x38 character grid. Like donut.c, there are two rotation angles advancing at different speeds -- one around the vertical axis, one around the horizontal -- so the rat tumbles through every orientation instead of spinning like a turntable. Every point goes through the same four steps: rotate, project, depth-test, shade.
+
+```typescript
+const SHADES = ".,-~:;=!*#$@"
+const LIGHT = normalize([0.4, 0.8, -0.6]) // above, in front, slightly left
+
+function frame(a: number, b: number): string {
+  const zBuffer = new Float32Array(WIDTH * HEIGHT).fill(Infinity)
+  const screen: string[] = new Array(WIDTH * HEIGHT).fill(" ")
+  const cosA = Math.cos(a)
+  const sinA = Math.sin(a)
+  const cosB = Math.cos(b)
+  const sinB = Math.sin(b)
+
+  for (const { pos, normal } of RAT) {
+    // rotate around the y axis by a, then around the x axis by b
+    const x = pos[0] * cosA + pos[2] * sinA
+    const zSpin = pos[2] * cosA - pos[0] * sinA
+    const y = pos[1] * cosB - zSpin * sinB
+    const z = pos[1] * sinB + zSpin * cosB
+
+    // perspective projection onto the character grid
+    const depth = z + K2
+    const px = Math.round(WIDTH / 2 + (K1 * x) / depth)
+    const py = Math.round(HEIGHT / 2 - (K1 * ASPECT * y) / depth)
+    if (px < 0 || px >= WIDTH || py < 0 || py >= HEIGHT) continue
+
+    // z-buffer: only keep the point nearest to the camera per cell
+    const idx = py * WIDTH + px
+    if (depth >= zBuffer[idx]) continue
+    zBuffer[idx] = depth
+
+    // rotate the normal the same way, then light it
+    const nx = normal[0] * cosA + normal[2] * sinA
+    const nzSpin = normal[2] * cosA - normal[0] * sinA
+    const ny = normal[1] * cosB - nzSpin * sinB
+    const nz = normal[1] * sinB + nzSpin * cosB
+
+    const lum = nx * LIGHT[0] + ny * LIGHT[1] + nz * LIGHT[2]
+    screen[idx] = SHADES[Math.max(0, Math.floor(lum * (SHADES.length - 1)))]
+  }
+
+  // join the flat buffer into rows of text
+  const rows: string[] = []
+  for (let row = 0; row < HEIGHT; row++) {
+    rows.push(screen.slice(row * WIDTH, (row + 1) * WIDTH).join(""))
+  }
+  return rows.join("\n")
+}
+```
+
+A few details worth calling out:
+
+- **`ASPECT = 0.55`** squashes the vertical axis, because a monospace character cell is nearly twice as tall as it is wide. Without it the rat renders stretched, like it has been through some kind of accident.
+- **The normals get rotated too.** Lighting has to be computed in the same space as the geometry, otherwise the bright side of the rat stays glued to one side of its body while it spins.
+- **The dot product `lum` is the entire lighting model.** A surface facing the light directly scores near 1 and gets an `@`; a surface at a grazing angle gets a `.`. Points facing away are clamped to the dimmest character instead of being skipped, which keeps the silhouette solid.
+
+## The React shell
+
+The renderer is pure -- angles in, string out -- so the component around it is small. A `requestAnimationFrame` loop advances both angles and writes into a `<pre>` via `textContent`, skipping React re-renders entirely:
+
+```tsx
+export function SpinningRat({ speed = 0.9 }: SpinningRatProps) {
+  const preRef = useRef<HTMLPreElement>(null)
+  const pausedRef = useRef(false)
+
+  useEffect(() => {
+    const pre = preRef.current
+    if (!pre) return
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      pausedRef.current = true
+    }
+
+    let a = 0
+    let b = 0.35 // start slightly tilted so the first frame reads well
+    let last = performance.now()
+    let raf = 0
+
+    pre.textContent = frame(a, b)
+
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick)
+      const dt = Math.min(now - last, 100) / 1000
+      last = now
+      if (pausedRef.current) return
+      a += speed * dt
+      b += speed * B_RATE * dt
+      pre.textContent = frame(a, b)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [speed])
+
+  return (
+    <pre ref={preRef} onClick={() => (pausedRef.current = !pausedRef.current)} />
+  )
+}
+```
+
+Users with `prefers-reduced-motion` set get a single still frame instead of the animation, and clicking toggles the spin for everyone else.
+
+That's it -- no canvas, no WebGL, no libraries. Just a rat-shaped cloud of points and some trigonometry, forever rotating.

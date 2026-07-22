@@ -28,7 +28,7 @@ export default defineConfig(async ({ command }) => {
             dark: "vitesse-dark",
           },
           defaultColor: "light",
-          langs: ["typescript", "javascript", "csharp", "python", "bash", "json", "css", "html"],
+          langs: ["typescript", "tsx", "javascript", "csharp", "python", "bash", "json", "css", "html"],
         }],
       ],
     })},
