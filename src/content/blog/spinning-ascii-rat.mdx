@@ -1,7 +1,7 @@
 ---
 title: "A Rat, Spinning, in ASCII"
 date: "2026-07-21"
-summary: "Rendering a 3D rat as spinning ASCII art -- a point cloud, a z-buffer, a light vector, and twelve characters."
+summary: "Rendering a 3D rat as spinning ASCII art, a point cloud, a z-buffer, a light vector, and twelve characters."
 tags: ["graphics", "typescript"]
 published: true
 ---
@@ -37,7 +37,7 @@ function ellipsoid(center: Vec3, radii: Vec3, uSteps: number, vSteps: number) {
           center[2] + radii[2] * z,
         ],
         // an ellipsoid's normal is the unit direction scaled by the
-        // inverse radii -- this makes shading follow the squashed shape
+        // inverse radii this makes shading follow the squashed shape
         normal: normalize([x / radii[0], y / radii[1], z / radii[2]]),
       })
     }
@@ -46,7 +46,7 @@ function ellipsoid(center: Vec3, radii: Vec3, uSteps: number, vSteps: number) {
 }
 ```
 
-With that, the rat itself is just a parts list. Haunches, torso, head, snout, two ears, four feet -- and a tail, built as sixty tiny spheres swept along a curve that droops, rises, and wiggles sideways:
+With that, the rat itself is just a parts list. Haunches, torso, head, snout, two ears, four feet and a tail, built as sixty tiny spheres swept along a curve that droops, rises, and wiggles sideways:
 
 ```typescript
 function buildRat(): SurfacePoint[] {
@@ -87,7 +87,7 @@ The blobs overlap freely. Any point that ends up inside another blob simply lose
 
 ## Spin, project, shade
 
-Each frame renders the roughly 6,500 points from scratch into an 80x38 character grid. Like donut.c, there are two rotation angles advancing at different speeds -- one around the vertical axis, one around the horizontal -- so the rat tumbles through every orientation instead of spinning like a turntable. Every point goes through the same four steps: rotate, project, depth-test, shade.
+Each frame renders the roughly 6,500 points from scratch into an 80x38 character grid. Like donut.c, there are two rotation angles advancing at different speeds; one around the vertical axis, one around the horizontal, so the rat tumbles through every orientation instead of spinning like a turntable. Every point goes through the same four steps: rotate, project, depth-test, shade.
 
 ```typescript
 const SHADES = ".,-~:;=!*#$@"
@@ -146,7 +146,7 @@ A few details worth calling out:
 
 ## The React shell
 
-The renderer is pure -- angles in, string out -- so the component around it is small. A `requestAnimationFrame` loop advances both angles and writes into a `<pre>` via `textContent`, skipping React re-renders entirely:
+The renderer is pure angles in, string out so the component around it is small. A `requestAnimationFrame` loop advances both angles and writes into a `<pre>` via `textContent`, skipping React re-renders entirely:
 
 ```tsx
 export function SpinningRat({ speed = 0.9 }: SpinningRatProps) {
@@ -190,4 +190,4 @@ export function SpinningRat({ speed = 0.9 }: SpinningRatProps) {
 
 Users with `prefers-reduced-motion` set get a single still frame instead of the animation, and clicking toggles the spin for everyone else.
 
-That's it -- no canvas, no WebGL, no libraries. Just a rat-shaped cloud of points and some trigonometry, forever rotating.
+That's it  no canvas, no WebGL, no libraries. Just a rat-shaped cloud of points and some trigonometry, forever rotating.
